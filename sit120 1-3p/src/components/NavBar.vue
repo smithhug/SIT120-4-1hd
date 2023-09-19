@@ -1,9 +1,9 @@
 <template>
     <div>
         <ul>
-            <li><a href="/">HTML</a></li>
-            <li><a href="#/CSS">CSS</a></li>
-            <li><a href="#/Vue">Vue</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="#/Projects">Projects</a></li>
+            <li><a href="#/Contact-Us">Contact Us</a></li>
         </ul>
     </div>
 </template>
