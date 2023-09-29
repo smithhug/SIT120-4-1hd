@@ -1,5 +1,9 @@
 @import './base.css';
 
+:root {
+	--colorscheme: hsla(160, 100%, 37%, 1);
+}
+
 table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -19,7 +23,7 @@ th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: teal;
+  background-color: var(--colorscheme);
   color: white;
 }
 
@@ -37,7 +41,7 @@ body, html {
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--colorscheme);
   transition: 0.4s;
 }
 
@@ -555,7 +559,7 @@ textarea {
 }
 
 button {
-  background-color: teal;
+  background-color: var(--colorscheme);
   color: #fff;
   border: none;
   padding: 10px 20px;

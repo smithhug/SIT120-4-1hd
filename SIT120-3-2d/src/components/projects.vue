@@ -39,8 +39,5 @@
             <a href="https://github.com/smithhug">https://github.com/smithhug</a>
         </div>
     </section>
-    <footer class="secondary_header footer">
-        <div class="copyright">&copy;2023 - <strong>Hugo Smith</strong></div>
-    </footer>
     </div>
 </template>

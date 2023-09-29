@@ -1,48 +1,45 @@
 <script setup>
-  import { ref, computed } from 'vue';
-  import home from './components/home.vue';
-  import projects from './components/projects.vue';
-  import contact from './components/contact.vue';
-  import Navbar from './components/NavBar.vue'
+  import { ref, computed, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
+  import Home from './components/home.vue';
+  import Projects from './components/projects.vue';
+  import Contact from './components/contact.vue';
+  import Navbar from './components/NavBar.vue';
+  import MyFooter from './components/Footer.vue';
 
   const routes = {
-      '/': home,
-      '/Projects': projects,
-      '/Contact-Us': contact
+    '/': Home,
+    '/projects': Projects,
+    '/contact-us': Contact,
   };
 
-  const currentPath = ref(window.location.hash);
+  const currentRoute = useRoute();
+  const currentPath = ref(currentRoute.path);
 
-  window.addEventListener('hashchange', () => {
-  currentPath.value = window.location.hash;
+  onMounted(() => {
+    currentPath.value = currentRoute.path;
   });
 
   const currentView = computed(() => {
-  return routes[currentPath.value.slice(1) || '/'];
+    return routes[currentPath.value] || Home;
   });
 
-  const projectlist = ref([
-        {
-            title: 'SIT120 3-1D',
-            link: 'https://github.com/smithhug/SIT120-3-1d',
-            thumbnail: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-        },
-        {
-            title: 'SIT120 1-3P',
-            link: 'https://github.com/smithhug/SIT120-1-3p',
-            thumbnail: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-        },
-        {
-            title: 'SIT120 2-2C',
-            link: 'https://github.com/smithhug/SIT120-2-2C',
-            thumbnail: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-        },
-        {
-            title: 'SIT120 2-3C',
-            link: 'https://github.com/smithhug/SIT120-2-3c',
-            thumbnail: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-        }
-    ])
+  let projectlist = ref([]);
+
+  async function loadProjectList() {
+    try {
+      const response = await fetch('/src/projectsjson.json');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      projectlist.value = await response.json();
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  loadProjectList();
 
 </script>
 
@@ -53,7 +50,10 @@
         <Navbar/>
       </div>
     </header>
-    <component :is="currentView" :projectlist="projectlist"></component>
+    <router-view :projectlist="projectlist"></router-view>
+    <footer class="secondary_header footer">
+        <MyFooter/>
+    </footer>
   </div>
 </template>
 
